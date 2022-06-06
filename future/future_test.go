@@ -41,7 +41,7 @@ func TestAwait(t *testing.T) {
 }
 
 func TestMap(t *testing.T) {
-	fn := Ready[int](420)
+	fn := Ready(420)
 
 	fs := Map(fn, func(a int) string {
 		return strconv.Itoa(a)
@@ -53,7 +53,7 @@ func TestMap(t *testing.T) {
 }
 
 func TestAndThen(t *testing.T) {
-	fn := Ready[int](420)
+	fn := Ready(420)
 
 	fs := AndThen(fn, func(a int) *Future[string] {
 		return Ready(strconv.Itoa(a))
