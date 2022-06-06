@@ -19,8 +19,8 @@ func TestNew(t *testing.T) {
 	assert.Equal(t, 420, n)
 }
 
-func TestPure(t *testing.T) {
-	fn := Pure(420)
+func TestReady(t *testing.T) {
+	fn := Ready(420)
 
 	n := fn.Await()
 
@@ -41,7 +41,7 @@ func TestAwait(t *testing.T) {
 }
 
 func TestMap(t *testing.T) {
-	fn := Pure[int](420)
+	fn := Ready[int](420)
 
 	fs := Map(fn, func(a int) string {
 		return strconv.Itoa(a)
@@ -53,10 +53,10 @@ func TestMap(t *testing.T) {
 }
 
 func TestAndThen(t *testing.T) {
-	fn := Pure[int](420)
+	fn := Ready[int](420)
 
 	fs := AndThen(fn, func(a int) *Future[string] {
-		return Pure(strconv.Itoa(a))
+		return Ready(strconv.Itoa(a))
 	})
 
 	s := fs.Await()
@@ -74,7 +74,7 @@ func TestAll(t *testing.T) {
 			time.Sleep(100 * time.Millisecond)
 			return 2
 		}),
-		Pure(3),
+		Ready(3),
 	}
 
 	fns := All(nfs)
